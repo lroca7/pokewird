@@ -1,0 +1,23 @@
+.pokemon_card {
+  background: navy;
+  width: 150px;
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 10px;
+  position: relative;
+  p {
+    text-transform: capitalize;
+  }
+
+  .card_button {
+    background: yellow;
+    position: absolute; /* Permite que el botón se posicione en la tarjeta */
+    top: 8px; /* Ajusta la distancia desde el borde superior */
+    right: 8px; /* Ajusta la distancia desde el borde derecho */
+    z-index: 10; /* Asegúrate de que esté por encima de otros elementos */
+    /* Ajusta el tamaño del botón si es necesario */
+  }
+}

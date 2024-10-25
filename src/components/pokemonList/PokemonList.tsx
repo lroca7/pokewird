@@ -1,9 +1,12 @@
 import React, { useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../hooks";
+import { useAppDispatch, useAppSelector } from "../../hooks";
 import {
   fetchPokemons,
   selectPokemonList,
-} from "../store/features/pokemon/pokemonSlice";
+} from "../../store/features/pokemon/pokemonSlice";
+import PokemonCard from "../pokemonCard/PokemonCard";
+import style from "./PokemonList.module.css";
+import { Box } from "@mui/material";
 
 const PokemonList: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -14,11 +17,11 @@ const PokemonList: React.FC = () => {
   }, [dispatch]);
 
   return (
-    <div className="pokemon-list">
+    <Box className={style.pokemon_list}>
       {pokemons.map((pokemon) => (
-        <div>{pokemon.name}</div>
+        <PokemonCard key={pokemon.id} pokemon={pokemon} />
       ))}
-    </div>
+    </Box>
   );
 };
 

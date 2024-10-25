@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../..";
 import { PokemonService } from "../../../api/pokemonService";
 
@@ -11,11 +11,13 @@ interface Pokemon {
 interface PokemonState {
   list: Pokemon[];
   status: "idle" | "loading" | "failed" | "sucess";
+  readyForBattle: Pokemon[];
 }
 
 const initialState: PokemonState = {
   list: [],
   status: "idle",
+  readyForBattle: [],
 };
 
 export const fetchPokemons = createAsyncThunk(
@@ -31,6 +33,9 @@ export const fetchPokemons = createAsyncThunk(
           (pokemon: Pokemon, index: number) => ({
             id: index + 1,
             name: pokemon.name,
+            image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${
+              index + 1
+            }.png`,
           })
         );
 
@@ -47,7 +52,22 @@ export const fetchPokemons = createAsyncThunk(
 const pokemonSlice = createSlice({
   name: "pokemon",
   initialState,
-  reducers: {},
+  reducers: {
+    addPokemon: (state, action: PayloadAction<Pokemon>) => {
+      // Verificar existencia
+      const pokemonExist = state.readyForBattle.some(
+        (pokemon) => pokemon.id === action.payload.id
+      );
+      if (!pokemonExist) {
+        state.readyForBattle.push(action.payload);
+      }
+    },
+    deletePokemon: (state, action: PayloadAction<number>) => {
+      state.readyForBattle = state.readyForBattle.filter(
+        (pokemon) => pokemon.id !== action.payload
+      );
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchPokemons.pending, (state) => {
@@ -63,5 +83,9 @@ const pokemonSlice = createSlice({
   },
 });
 
+export const { addPokemon, deletePokemon } = pokemonSlice.actions;
+
 export const selectPokemonList = (state: RootState) => state.pokemon.list;
+export const selectPokemonReadyForBattle = (state: RootState) =>
+  state.pokemon.readyForBattle;
 export default pokemonSlice.reducer;

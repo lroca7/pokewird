@@ -1,13 +1,8 @@
 import "./App.css";
-import PokemonList from "./components/PokemonList";
+import Home from "./components/home/Home";
 
 function App() {
-  return (
-    <>
-      <h1>Poke Wird</h1>
-      <PokemonList />
-    </>
-  );
+  return <Home />;
 }
 
 export default App;
