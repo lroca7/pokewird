@@ -97,11 +97,16 @@ export const selectPokemonReadyForBattle = (state: RootState) =>
 
 export const selectFilteredPokemonList = (state: RootState) => {
   const { list, searchTerm } = state.pokemon;
-  return searchTerm
-    ? list.filter((pokemon) =>
-        pokemon.name.toLowerCase().includes(searchTerm.toLowerCase())
-      )
-    : list;
+  if (!searchTerm) return list;
+
+  return list.filter((pokemon) => {
+    const isNumberSearch = !isNaN(Number(searchTerm));
+    if (isNumberSearch) {
+      return pokemon.id === Number(searchTerm);
+    } else {
+      return pokemon.name.toLowerCase().includes(searchTerm.toLowerCase());
+    }
+  });
 };
 
 export default pokemonSlice.reducer;

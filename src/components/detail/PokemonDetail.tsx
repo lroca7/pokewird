@@ -56,7 +56,12 @@ const PokemonDetail: React.FC = () => {
 
   const handleAddPokemon = () => {
     if (pokemon) {
-      dispatch(addPokemon(pokemon));
+      const minPokemon = {
+        id: pokemon.id,
+        name: pokemon.name,
+        image: pokemon.sprites.front_default,
+      };
+      dispatch(addPokemon(minPokemon));
     }
   };
 
@@ -70,8 +75,8 @@ const PokemonDetail: React.FC = () => {
     const getPokemonDetail = async () => {
       try {
         const pokemonService = new PokemonService();
-
-        const response = await pokemonService.getPokemonById(id);
+        const pokemonId = Number(id);
+        const response = await pokemonService.getPokemonById(pokemonId);
 
         if (response.status === 200) {
           setPokemon(response.data);
