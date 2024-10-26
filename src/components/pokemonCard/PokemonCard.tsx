@@ -9,6 +9,7 @@ import {
   addPokemon,
   deletePokemon,
 } from "../../store/features/pokemon/pokemonSlice";
+import { useNavigate } from "react-router-dom";
 
 interface PokemonCardProps {
   pokemon: {
@@ -21,6 +22,7 @@ interface PokemonCardProps {
 
 const PokemonCard: React.FC<PokemonCardProps> = ({ pokemon, showDelete }) => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const handleAddPokemon = () => {
     dispatch(addPokemon(pokemon));
@@ -28,6 +30,10 @@ const PokemonCard: React.FC<PokemonCardProps> = ({ pokemon, showDelete }) => {
 
   const handleDeletePokemon = () => {
     dispatch(deletePokemon(pokemon.id));
+  };
+
+  const handleDetailPokemon = () => {
+    navigate(`/pokemon/${pokemon.id}`);
   };
 
   return (
@@ -49,9 +55,10 @@ const PokemonCard: React.FC<PokemonCardProps> = ({ pokemon, showDelete }) => {
           <AddCircleOutlineIcon />
         </IconButton>
       )}
-
-      <img src={pokemon.image} alt={pokemon.name} />
-      <Typography variant="body1">{pokemon.name}</Typography>
+      <Box onClick={handleDetailPokemon}>
+        <img src={pokemon.image} alt={pokemon.name} />
+        <Typography variant="body1">{pokemon.name}</Typography>
+      </Box>
     </Box>
   );
 };

@@ -12,12 +12,14 @@ interface PokemonState {
   list: Pokemon[];
   status: "idle" | "loading" | "failed" | "sucess";
   readyForBattle: Pokemon[];
+  searchTerm: string;
 }
 
 const initialState: PokemonState = {
   list: [],
   status: "idle",
   readyForBattle: [],
+  searchTerm: "",
 };
 
 export const fetchPokemons = createAsyncThunk(
@@ -67,6 +69,9 @@ const pokemonSlice = createSlice({
         (pokemon) => pokemon.id !== action.payload
       );
     },
+    setSearchTerm: (state, action) => {
+      state.searchTerm = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -83,9 +88,20 @@ const pokemonSlice = createSlice({
   },
 });
 
-export const { addPokemon, deletePokemon } = pokemonSlice.actions;
+export const { addPokemon, deletePokemon, setSearchTerm } =
+  pokemonSlice.actions;
 
 export const selectPokemonList = (state: RootState) => state.pokemon.list;
 export const selectPokemonReadyForBattle = (state: RootState) =>
   state.pokemon.readyForBattle;
+
+export const selectFilteredPokemonList = (state: RootState) => {
+  const { list, searchTerm } = state.pokemon;
+  return searchTerm
+    ? list.filter((pokemon) =>
+        pokemon.name.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    : list;
+};
+
 export default pokemonSlice.reducer;

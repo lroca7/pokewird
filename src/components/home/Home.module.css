@@ -1,11 +1,3 @@
 .home {
   display: flex;
-
-  .wrapper__list {
-    width: 60%;
-  }
-
-  .wrapper__battle {
-    width: 40%;
-  }
 }

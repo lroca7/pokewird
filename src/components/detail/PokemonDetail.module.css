@@ -1,0 +1,11 @@
+.pokemon__detail {
+  display: flex;
+  background: red;
+  flex-direction: column;
+
+  img {
+    margin: 0 auto;
+    width: 96px;
+    height: 96px;
+  }
+}

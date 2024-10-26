@@ -12,4 +12,10 @@ export class PokemonService {
 
     return http.get(url);
   }
+
+  getPokemonById(id: number) {
+    const url = `${this.baseUrl}/pokemon/${id}`;
+
+    return http.get(url);
+  }
 }

@@ -1,0 +1,11 @@
+.main__layaout {
+  display: flex;
+
+  .wrapper__main {
+    width: 60%;
+  }
+
+  .wrapper__battle {
+    width: 40%;
+  }
+}
