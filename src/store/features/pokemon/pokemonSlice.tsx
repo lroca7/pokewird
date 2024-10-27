@@ -56,12 +56,14 @@ const pokemonSlice = createSlice({
   initialState,
   reducers: {
     addPokemon: (state, action: PayloadAction<Pokemon>) => {
-      // Verificar existencia
-      const pokemonExist = state.readyForBattle.some(
-        (pokemon) => pokemon.id === action.payload.id
-      );
-      if (!pokemonExist) {
-        state.readyForBattle.push(action.payload);
+      if (state.readyForBattle.length < 6) {
+        // Verificar existencia
+        const pokemonExist = state.readyForBattle.some(
+          (pokemon) => pokemon.id === action.payload.id
+        );
+        if (!pokemonExist) {
+          state.readyForBattle.push(action.payload);
+        }
       }
     },
     deletePokemon: (state, action: PayloadAction<number>) => {

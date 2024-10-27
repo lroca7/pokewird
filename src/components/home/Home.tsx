@@ -16,10 +16,8 @@ const Home: React.FC = () => {
 
   return (
     <Box className={styles.home}>
-      <Box>
-        <PokemonSearch />
-        <PokemonList />
-      </Box>
+      <PokemonSearch />
+      <PokemonList />
     </Box>
   );
 };

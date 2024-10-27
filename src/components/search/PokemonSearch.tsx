@@ -17,7 +17,7 @@ const PokemonSearch: React.FC = () => {
         variant="outlined"
         fullWidth
         onChange={handleSearchChange}
-        placeholder="Search Pokémon..."
+        placeholder="Buscar pokemon..."
       />
     </Box>
   );

@@ -19,7 +19,9 @@ const PokemonBattle: React.FC = () => {
 
   return (
     <Box className={styles.pokemon_battle}>
-      <Typography variant="h4">Listos para el combate</Typography>
+      <Typography variant="h4" mb={2}>
+        Listos para el combate
+      </Typography>
       <Box className={styles.pokemon_list}>
         {pokemons.length > 0 ? (
           pokemons.map((pokemon) => (

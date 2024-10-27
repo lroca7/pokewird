@@ -1,5 +1,4 @@
 .pokemon_list {
-  background: lightgrey;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;

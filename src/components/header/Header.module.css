@@ -1,0 +1,19 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  height: 60px;
+  background-color: #dc0a2d;
+  color: #ffffff;
+  position: fixed;
+  width: 100%;
+  z-index: 1000;
+
+  .logoContainer {
+    cursor: pointer;
+    img {
+      width: 180px;
+    }
+  }
+}

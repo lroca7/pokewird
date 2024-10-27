@@ -1,5 +1,12 @@
+.main__app {
+  margin: 0 auto;
+  width: 100%;
+}
 .main__layaout {
   display: flex;
+  margin: 0 auto;
+  max-width: 1280px;
+  padding-top: 80px;
 
   .wrapper__main {
     width: 60%;
@@ -7,5 +14,8 @@
 
   .wrapper__battle {
     width: 40%;
+    min-height: calc(100vh - 80px);
+    padding: 20px;
+    background-image: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%);
   }
 }

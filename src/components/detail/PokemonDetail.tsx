@@ -1,8 +1,7 @@
-// PokemonDetail.tsx
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-import { Box, Button, Typography } from "@mui/material";
+import { Box, IconButton, Typography } from "@mui/material";
 import { PokemonService } from "../../api/pokemonService";
 
 import styles from "./PokemonDetail.module.css";
@@ -12,7 +11,11 @@ import {
   selectPokemonReadyForBattle,
 } from "../../store/features/pokemon/pokemonSlice";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-// Pokemon.ts
+import Loading from "../loading/Loading";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { statTranslations, typeColors, typeColorsGradients } from "../../utils";
+
 export interface PokemonStat {
   base_stat: number;
   effort: number; // Si deseas almacenar la "eficiencia" de la estadística
@@ -33,11 +36,17 @@ export interface PokemonType {
 export interface Pokemon {
   id: number;
   name: string;
-  height: number; // En decímetros
+  height: number;
+  weight: number;
   types: PokemonType[];
   stats: PokemonStat[];
   sprites: {
-    front_default: string; // URL de la imagen
+    front_default: string;
+    other: {
+      "official-artwork": {
+        front_default: string;
+      };
+    };
   };
 }
 
@@ -74,6 +83,7 @@ const PokemonDetail: React.FC = () => {
   useEffect(() => {
     const getPokemonDetail = async () => {
       try {
+        setLoading(true);
         const pokemonService = new PokemonService();
         const pokemonId = Number(id);
         const response = await pokemonService.getPokemonById(pokemonId);
@@ -92,50 +102,108 @@ const PokemonDetail: React.FC = () => {
     };
 
     getPokemonDetail();
+
+    window.scrollTo(0, 0);
   }, [id]);
 
-  return (
-    <Box>
-      {loading && <Box>Cargando...</Box>}
+  // Verificar si 'pokemon' es null
+  if (!pokemon) {
+    return (
+      <Box className={styles.pokemon__detail}>
+        <Typography variant="h6">No hay pokemon seleccionado</Typography>
+      </Box>
+    );
+  }
 
-      {isPokemonReadyToBattle ? (
-        <Button
-          variant="contained"
-          color="secondary"
-          onClick={handleDeletePokemon}
-        >
-          Remover de la Batalla
-        </Button>
-      ) : (
-        <Button variant="contained" color="primary" onClick={handleAddPokemon}>
-          Agregar a la Batalla
-        </Button>
-      )}
+  const cardColor =
+    typeColorsGradients[
+      pokemon.types[0].type.name as keyof typeof typeColorsGradients
+    ] || "#FFFFFF";
+
+  return (
+    <>
+      {loading && <Loading />}
+
       {pokemon && (
-        <Box className={styles.pokemon__detail}>
-          <img src={pokemon.sprites.front_default} alt={pokemon.name} />
-          <Typography variant="h4">{pokemon.name}</Typography>
-          <Typography variant="body1">Número: {pokemon.id}</Typography>
-          <Typography variant="body1">
-            Altura: {pokemon.height} dm
-          </Typography>{" "}
-          {/* Convertir a metros */}
-          <Typography variant="body1">
-            Tipo: {pokemon.types.map((type) => type.type.name).join(", ")}
+        <Box
+          className={styles.pokemon__detail}
+          // sx={{ backgroundColor: cardColor }}
+          sx={{
+            background: cardColor || "#FFFFFF", // Usar el degradado
+          }}
+        >
+          {isPokemonReadyToBattle ? (
+            <IconButton
+              aria-label="delete"
+              className={styles.card_button}
+              onClick={handleDeletePokemon}
+            >
+              <DeleteIcon />
+            </IconButton>
+          ) : (
+            <IconButton
+              aria-label="add"
+              className={styles.card_button}
+              onClick={handleAddPokemon}
+              title="Agregar a la batalla"
+            >
+              <AddCircleOutlineIcon />
+            </IconButton>
+          )}
+          <img
+            src={pokemon.sprites.other["official-artwork"].front_default}
+            alt={pokemon.name}
+          />
+          <Typography variant="h4" className={styles.capitalize}>
+            {pokemon.name}
           </Typography>
-          <Typography variant="body1">Estadísticas base:</Typography>
-          {pokemon.stats.map((stat) => (
-            <Typography key={stat.stat.name} variant="body1">
-              {stat.stat.name.charAt(0).toUpperCase() + stat.stat.name.slice(1)}
-              : {stat.base_stat}
-            </Typography>
-          ))}
+          <Typography variant="h5" className={styles.pokemon__number}>
+            # {pokemon.id}
+          </Typography>
+
+          <Box className={styles.pokemon__types}>
+            {pokemon.types.map((type) => (
+              <Box
+                key={type.type.name}
+                className={styles.type__chip}
+                sx={{
+                  backgroundColor: typeColors[type.type.name] || "#FFFFFF",
+                }}
+              >
+                <Typography variant="body1">{type.type.name}</Typography>
+              </Box>
+            ))}
+          </Box>
+
+          <Box className={styles.pokemon__size}>
+            <Box className={styles.size}>
+              <Typography variant="body1">Altura</Typography>
+              <Typography variant="body1">{pokemon.height}</Typography>
+            </Box>
+
+            <Box className={styles.size}>
+              <Typography variant="body1">Peso</Typography>
+              <Typography variant="body1">{pokemon.weight}</Typography>
+            </Box>
+          </Box>
+
+          <Box className={styles.pokemon__stats}>
+            <Typography variant="h6">Estadísticas base</Typography>
+
+            {pokemon.stats.map((stat) => (
+              <Box key={stat.stat.name}>
+                <Typography variant="subtitle1">
+                  {statTranslations[stat.stat.name] || stat.stat.name}:
+                </Typography>
+                <Typography variant="body1">{stat.base_stat}</Typography>
+              </Box>
+            ))}
+          </Box>
         </Box>
       )}
 
-      {}
       {error && <Box>Ha ocurrido un error</Box>}
-    </Box>
+    </>
   );
 };
 

@@ -1,11 +1,74 @@
 .pokemon__detail {
   display: flex;
-  background: red;
+  width: 320px;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  margin: 20px auto;
+  position: relative;
+  background: #d3b3b3;
+  box-shadow: 0 20px 15px -3px #26006914;
 
+  padding: 20px;
   img {
     margin: 0 auto;
-    width: 96px;
-    height: 96px;
+    width: 200px;
+    height: 200px;
+  }
+
+  .card_button {
+    background: rgb(225, 197, 86);
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    z-index: 10;
+  }
+
+  .pokemon__number {
+    position: absolute;
+    top: 8px;
+    left: 10px;
+    z-index: 10;
+  }
+
+  .pokemon__types {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 10px 0;
+    .type__chip {
+      color: #ffffff;
+      padding: 4px 8px;
+      border-radius: 4px;
+      text-transform: capitalize;
+    }
+  }
+
+  .pokemon__size {
+    display: flex;
+    justify-content: space-between; /* Espacio entre las columnas */
+    align-items: flex-start; /* Alinea los elementos en la parte superior */
+    margin-bottom: 16px; /* Espacio debajo del contenedor, ajusta según sea necesario */
+    gap: 8px;
+    .size {
+      flex: 1; /* Hace que cada columna ocupe el mismo espacio */
+      text-align: center; /* Centra el texto dentro de cada columna */
+    }
+  }
+
+  .pokemon__stats {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    > div {
+      display: flex;
+      align-items: center;
+    }
+  }
+  .capitalize {
+    text-transform: capitalize;
   }
 }

@@ -1,4 +1,5 @@
 .pokemon__search {
+  padding: 10px 20px;
   input {
     background: white;
   }

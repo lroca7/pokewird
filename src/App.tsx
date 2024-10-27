@@ -12,8 +12,6 @@ function App() {
           <Route index element={<Home />} />
           <Route path="pokemon/:id" element={<PokemonDetail />} />
         </Route>
-        {/* <Route path="/" element={<Home />} />
-          <Route path="/pokemon/:id" element={<PokemonDetail />} /> */}
       </Routes>
     </BrowserRouter>
   );

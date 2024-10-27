@@ -2,18 +2,19 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  position: fixed;
-}
-
-.pokemon_list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  align-items: center;
   width: 100%;
 
-  .pokemon_card {
-    flex: 1 1 50%; /* Ocupa el 50% del ancho del contenedor */
-    max-width: 50%; /* Limita el ancho máximo a 50% */
-    box-sizing: border-box;
+  .pokemon_list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+
+    .pokemon_card {
+      flex: 1 1 50%; /* Ocupa el 50% del ancho del contenedor */
+      max-width: 50%; /* Limita el ancho máximo a 50% */
+      box-sizing: border-box;
+    }
   }
 }
