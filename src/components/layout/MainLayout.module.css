@@ -1,6 +1,8 @@
 .main__app {
   margin: 0 auto;
   width: 100%;
+  height: 100vh;
+  overflow: hidden;
 }
 .main__layaout {
   display: flex;
