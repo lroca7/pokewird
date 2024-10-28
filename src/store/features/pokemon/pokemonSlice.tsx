@@ -13,6 +13,7 @@ interface PokemonState {
   status: "idle" | "loading" | "failed" | "sucess";
   readyForBattle: Pokemon[];
   searchTerm: string;
+  isFullForBattle: boolean;
 }
 
 const initialState: PokemonState = {
@@ -20,6 +21,7 @@ const initialState: PokemonState = {
   status: "idle",
   readyForBattle: [],
   searchTerm: "",
+  isFullForBattle: false,
 };
 
 export const fetchPokemons = createAsyncThunk(
@@ -64,12 +66,15 @@ const pokemonSlice = createSlice({
         if (!pokemonExist) {
           state.readyForBattle.push(action.payload);
         }
+      } else {
+        state.isFullForBattle = true;
       }
     },
     deletePokemon: (state, action: PayloadAction<number>) => {
       state.readyForBattle = state.readyForBattle.filter(
         (pokemon) => pokemon.id !== action.payload
       );
+      state.isFullForBattle = false;
     },
     setSearchTerm: (state, action) => {
       state.searchTerm = action.payload;
@@ -81,6 +86,9 @@ const pokemonSlice = createSlice({
       if (!exists) {
         state.list.push(newPokemon);
       }
+    },
+    closeSnackbarBattle: (state) => {
+      state.isFullForBattle = false; // Cambiar el estado a falso para cerrar el snackbar
     },
   },
   extraReducers: (builder) => {
@@ -98,8 +106,13 @@ const pokemonSlice = createSlice({
   },
 });
 
-export const { addPokemon, deletePokemon, setSearchTerm, addPokemonToList } =
-  pokemonSlice.actions;
+export const {
+  addPokemon,
+  deletePokemon,
+  setSearchTerm,
+  addPokemonToList,
+  closeSnackbarBattle,
+} = pokemonSlice.actions;
 
 export const selectPokemonList = (state: RootState) => state.pokemon.list;
 export const selectPokemonReadyForBattle = (state: RootState) =>
@@ -118,5 +131,8 @@ export const selectFilteredPokemonList = (state: RootState) => {
     }
   });
 };
+
+export const selectIsFullForBattle = (state: RootState) =>
+  state.pokemon.isFullForBattle;
 
 export default pokemonSlice.reducer;

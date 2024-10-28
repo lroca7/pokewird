@@ -1,11 +1,23 @@
 import React from "react";
-import { Box } from "@mui/material";
+import { Alert, Box, Snackbar } from "@mui/material";
 import { Outlet } from "react-router-dom";
 import PokemonBattle from "../battle/PokemonBattle";
 import styles from "./MainLayout.module.css";
 import Header from "../header/Header";
+import { useAppDispatch, useAppSelector } from "../../hooks";
+import {
+  closeSnackbarBattle,
+  selectIsFullForBattle,
+} from "../../store/features/pokemon/pokemonSlice";
 
 const MainLayout: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const snackbarOpen = useAppSelector(selectIsFullForBattle);
+
+  const handleCloseSnackbar = () => {
+    dispatch(closeSnackbarBattle());
+  };
+
   return (
     <Box className={styles.main__app}>
       <Header />
@@ -18,6 +30,16 @@ const MainLayout: React.FC = () => {
           <PokemonBattle />
         </Box>
       </Box>
+
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={3000}
+        onClose={handleCloseSnackbar}
+      >
+        <Alert severity="warning">
+          Ya tienes 6 Pokemon en tu lista de batalla.
+        </Alert>
+      </Snackbar>
     </Box>
   );
 };
