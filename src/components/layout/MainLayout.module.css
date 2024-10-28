@@ -24,3 +24,24 @@
     background-image: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%);
   }
 }
+
+/* Media Query para dispositivos móviles */
+@media (max-width: 768px) {
+  .main__app {
+    height: auto;
+  }
+
+  .main__layaout {
+    flex-direction: column-reverse;
+
+    .wrapper__main {
+      width: 100%;
+      margin: 0;
+      padding: 10px 0;
+    }
+
+    .wrapper__battle {
+      width: 100%;
+    }
+  }
+}

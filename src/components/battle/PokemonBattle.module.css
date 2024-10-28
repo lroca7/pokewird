@@ -18,3 +18,18 @@
     }
   }
 }
+
+/* Media Query para dispositivos móviles */
+@media (max-width: 768px) {
+  .pokemon_battle {
+    .pokemon_list {
+      overflow: auto;
+      flex-wrap: nowrap;
+      justify-content: initial;
+
+      .pokemon_card:last-of-type {
+        margin-right: 20px; /* O el valor que desees para la última tarjeta */
+      }
+    }
+  }
+}

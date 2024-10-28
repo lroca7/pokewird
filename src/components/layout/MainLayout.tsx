@@ -1,5 +1,5 @@
 import React from "react";
-import { Alert, Box, Snackbar } from "@mui/material";
+import { Alert, Box, Snackbar, useMediaQuery } from "@mui/material";
 import { Outlet } from "react-router-dom";
 import PokemonBattle from "../battle/PokemonBattle";
 import styles from "./MainLayout.module.css";
@@ -8,11 +8,14 @@ import { useAppDispatch, useAppSelector } from "../../hooks";
 import {
   closeSnackbarBattle,
   selectIsFullForBattle,
+  selectPokemonReadyForBattle,
 } from "../../store/features/pokemon/pokemonSlice";
 
 const MainLayout: React.FC = () => {
   const dispatch = useAppDispatch();
+  const readyForBattle = useAppSelector(selectPokemonReadyForBattle);
   const snackbarOpen = useAppSelector(selectIsFullForBattle);
+  const isMobile = useMediaQuery("(max-width: 768px)"); // Detecta si es móvil
 
   const handleCloseSnackbar = () => {
     dispatch(closeSnackbarBattle());
@@ -26,9 +29,19 @@ const MainLayout: React.FC = () => {
           <Outlet />
         </Box>
 
-        <Box className={styles.wrapper__battle}>
-          <PokemonBattle />
-        </Box>
+        {!isMobile ? (
+          <Box className={styles.wrapper__battle}>
+            <PokemonBattle />
+          </Box>
+        ) : (
+          <>
+            {readyForBattle.length > 0 && (
+              <Box className={styles.wrapper__battle}>
+                <PokemonBattle />
+              </Box>
+            )}
+          </>
+        )}
       </Box>
 
       <Snackbar

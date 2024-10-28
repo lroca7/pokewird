@@ -27,3 +27,11 @@
     z-index: 10;
   }
 }
+
+/* Media Query para dispositivos móviles */
+@media (max-width: 768px) {
+  .pokemon_card {
+    width: 110px;
+    height: fit-content;
+  }
+}
