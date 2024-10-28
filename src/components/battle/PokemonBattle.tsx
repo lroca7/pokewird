@@ -1,21 +1,13 @@
-import React, { useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../../hooks";
-import {
-  fetchPokemons,
-  selectPokemonReadyForBattle,
-} from "../../store/features/pokemon/pokemonSlice";
+import React from "react";
+import { useAppSelector } from "../../hooks";
+import { selectPokemonReadyForBattle } from "../../store/features/pokemon/pokemonSlice";
 import PokemonCard from "../pokemonCard/PokemonCard";
 
 import styles from "./PokemonBattle.module.css";
 import { Box, Typography } from "@mui/material";
 
 const PokemonBattle: React.FC = () => {
-  const dispatch = useAppDispatch();
   const pokemons = useAppSelector(selectPokemonReadyForBattle);
-
-  useEffect(() => {
-    dispatch(fetchPokemons());
-  }, [dispatch]);
 
   return (
     <Box className={styles.pokemon_battle}>
