@@ -106,19 +106,12 @@ const PokemonDetail: React.FC = () => {
     window.scrollTo(0, 0);
   }, [id]);
 
-  // Verificar si 'pokemon' es null
-  if (!pokemon) {
-    return (
-      <Box className={styles.pokemon__detail}>
-        <Typography variant="h6">No hay pokemon seleccionado</Typography>
-      </Box>
-    );
-  }
-
   const cardColor =
-    typeColorsGradients[
-      pokemon.types[0].type.name as keyof typeof typeColorsGradients
-    ] || "#FFFFFF";
+    (pokemon &&
+      typeColorsGradients[
+        pokemon.types[0].type.name as keyof typeof typeColorsGradients
+      ]) ||
+    "#FFFFFF";
 
   return (
     <>
@@ -127,9 +120,8 @@ const PokemonDetail: React.FC = () => {
       {pokemon && (
         <Box
           className={styles.pokemon__detail}
-          // sx={{ backgroundColor: cardColor }}
           sx={{
-            background: cardColor || "#FFFFFF", // Usar el degradado
+            background: cardColor,
           }}
         >
           {isPokemonReadyToBattle ? (

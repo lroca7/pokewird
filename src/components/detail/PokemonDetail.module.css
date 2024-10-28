@@ -63,6 +63,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    text-align: center;
     > div {
       display: flex;
       align-items: center;
@@ -70,5 +71,16 @@
   }
   .capitalize {
     text-transform: capitalize;
+  }
+}
+
+/* Media Query para dispositivos móviles */
+@media (max-width: 768px) {
+  .pokemon__detail {
+    width: initial;
+    img {
+      width: 150px;
+      height: 150px;
+    }
   }
 }

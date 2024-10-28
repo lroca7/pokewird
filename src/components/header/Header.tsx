@@ -1,9 +1,8 @@
-// Header.tsx
 import React from "react";
 import { Box } from "@mui/material";
 import styles from "./Header.module.css";
 import { useNavigate } from "react-router-dom";
-import logo from "../../assets/logo.png"; // Asegúrate de que la ruta sea correcta
+import logo from "../../assets/logo.png";
 
 const Header: React.FC = () => {
   const navigate = useNavigate();

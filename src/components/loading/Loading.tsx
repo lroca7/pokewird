@@ -1,6 +1,6 @@
-// LoadingBackdrop.tsx
 import React from "react";
-import { Backdrop, CircularProgress, Typography, Box } from "@mui/material";
+import { Backdrop, Box } from "@mui/material";
+import pokeball from "../../assets/pokeball.png"; // Asegúrate de que la ruta sea correcta
 
 const Loading: React.FC = () => {
   return (
@@ -9,10 +9,7 @@ const Loading: React.FC = () => {
       sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
     >
       <Box display="flex" flexDirection="column" alignItems="center">
-        <CircularProgress color="inherit" />
-        <Typography variant="body1" mt={2}>
-          Cargando ...
-        </Typography>
+        <img src={pokeball} alt="Cargando..." />
       </Box>
     </Backdrop>
   );

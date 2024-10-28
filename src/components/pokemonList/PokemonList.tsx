@@ -17,8 +17,10 @@ const PokemonList: React.FC = () => {
   const loading = useAppSelector((state) => state.pokemon.status);
 
   useEffect(() => {
-    dispatch(fetchPokemons());
-  }, [dispatch]);
+    if (pokemons.length === 0) {
+      dispatch(fetchPokemons());
+    }
+  }, [dispatch, pokemons.length]);
 
   return (
     <>

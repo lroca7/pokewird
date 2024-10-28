@@ -18,4 +18,10 @@ export class PokemonService {
 
     return http.get(url);
   }
+
+  searchPokemon(name: string) {
+    const url = `${this.baseUrl}/pokemon/${name}`;
+
+    return http.get(url);
+  }
 }

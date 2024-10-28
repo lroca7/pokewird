@@ -74,6 +74,14 @@ const pokemonSlice = createSlice({
     setSearchTerm: (state, action) => {
       state.searchTerm = action.payload;
     },
+    addPokemonToList(state, action: PayloadAction<Pokemon>) {
+      const newPokemon = action.payload;
+
+      const exists = state.list.some((pokemon) => pokemon.id === newPokemon.id);
+      if (!exists) {
+        state.list.push(newPokemon);
+      }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -90,7 +98,7 @@ const pokemonSlice = createSlice({
   },
 });
 
-export const { addPokemon, deletePokemon, setSearchTerm } =
+export const { addPokemon, deletePokemon, setSearchTerm, addPokemonToList } =
   pokemonSlice.actions;
 
 export const selectPokemonList = (state: RootState) => state.pokemon.list;
